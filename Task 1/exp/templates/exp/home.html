@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .goal-section {
+            float: right;
+            width: 40%;
+        }
+        .goal-section h2, .goal-section h3, .goal-section p {
+            text-align: right;
+        }
+        .money-left {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'home' %}">My App</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'add_transaction' %}">Add Transaction</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'history' %}">History</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h1>Total Spendings: {{ budget.total_spent }}</h1>
+        <div class="mt-4 d-flex justify-content-center">
+            <a href="{% url 'add_transaction' %}" class="btn btn-primary btn-lg mx-3">Add Money</a>
+            <a href="{% url 'history' %}" class="btn btn-secondary btn-lg mx-3">View History</a>
+            <a href="{% url 'clear_budget' %}" class="btn btn-danger btn-lg mx-3">Clear Budget</a>
+        </div>
+        <div class="goal-section mt-5">
+            <h2>Set Your Goal</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Set Goal</button>
+            </form>
+            {% if budget.goal and budget.goal_amount %}
+            <div class="mt-5">
+                <h3>Goal: {{ budget.goal }}</h3>
+                <p>Goal Amount: {{ budget.goal_amount }}</p>
+                <p class="money-left">Money Left to Reach Goal: {{ money_left }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
