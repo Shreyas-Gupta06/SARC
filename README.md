@@ -1,2 +1,2 @@
 # SARC
-First Task was an goal based expense tracker
+Just a really simple goal based expense tracker
